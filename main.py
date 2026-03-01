@@ -67,7 +67,7 @@ def start(message):
             cursor.execute("SELECT * FROM users WHERE username = %s", (message.from_user.username))
             user_data = cursor.fetchone()
 
-            bot.send_message(message.chat.id, f"Вітаю, {user_data[2] if user_data[2] != '-' else user_data[6]}", reply_markup=markup)
+            bot.send_message(message.chat.id, f"Вітаю, {user_data['username'] if user_data['username'] != "-" else user_data['firstname']}", reply_markup=markup)
 
 @bot.message_handler(commands=['send'])
 def admin(message):
@@ -114,10 +114,10 @@ def text(message):
         user_data = cursor.fetchone()
 
         text = f"""
-<b>Прізвище та ім'я:</b> {user_data[7]} {user_data[6]}
-<b>Позивний:</b> {user_data[2]}
+<b>Прізвище та ім'я:</b> {user_data['firstname']} {user_data['lastname']}
+<b>Позивний:</b> {user_data['poz']}
 <b>Взвод:</b> Очікуйте розподіл
-<b>Відділення:</b> Очікуйте розподілу
+<b>Відділення:</b> Очікуйте розподіл
 """
         bot.send_message(message.chat.id, text, parse_mode='HTML')
 
