@@ -42,7 +42,7 @@ def send_adm(message):
     ids = cursor.fetchall()
 
     for i in ids:
-        bot.send_message(i[0], text)
+        bot.send_message(i['chat_id'], text)
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -114,7 +114,7 @@ def text(message):
         user_data = cursor.fetchone()
 
         text = f"""
-<b>Прізвище та ім'я:</b> {user_data['firstname']} {user_data['lastname']}
+<b>Прізвище та ім'я:</b> {user_data['lastname']} {user_data['firstname']}
 <b>Позивний:</b> {user_data['poz']}
 <b>Взвод:</b> Очікуйте розподіл
 <b>Відділення:</b> Очікуйте розподіл
