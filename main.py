@@ -23,7 +23,8 @@ def get_pib(message):
     bot.register_next_step_handler(msg, get_poz)
 
 def get_poz(message):
-    poz = message.text
+    poz = message.text.lower()
+    print(poz)
 
     cursor.execute("UPDATE users SET poz = %s WHERE username = %s", (poz if poz != 'немає' else '-', message.from_user.username))
     connection.commit()
