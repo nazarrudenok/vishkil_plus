@@ -2,18 +2,14 @@ import pymysql
 
 bot = '8355675288:AAGjeACTPhZfOGfYjTJeF9M2xFWOs4jkhZY'
 
-host = "crossover.proxy.rlwy.net"
-port = 14501
-user = "root"
-password = "ZcwcQvUHPyezOfkDLPINEdEEjiugrukw"
-database = "railway"
-
 connection = pymysql.connect(
-    host=host,
-    user=user,
-    password=password,
-    database=database,
-    port=port
+    host="crossover.proxy.rlwy.net",
+    user="root",
+    password="ZcwcQvUHPyezOfkDLPINEdEEjiugrukw",
+    database="railway",   # назва БД
+    port=14501,
+    charset="utf8mb4",
+    cursorclass=pymysql.cursors.DictCursor
 )
 
 cursor = connection.cursor()
