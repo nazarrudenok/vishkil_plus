@@ -1,1 +1,1 @@
-uv: python main.py
+railway: python main.py
