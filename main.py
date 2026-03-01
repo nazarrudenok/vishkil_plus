@@ -24,9 +24,8 @@ def get_pib(message):
 
 def get_poz(message):
     poz = message.text.lower()
-    print(poz)
 
-    cursor.execute("UPDATE users SET poz = %s WHERE username = %s", (poz if poz != 'немає' else '-', message.from_user.username))
+    cursor.execute("UPDATE users SET poz = %s WHERE username = %s", (f'{poz[0].upper()}{poz[1:]}' if poz != 'немає' else '-', message.from_user.username))
     connection.commit()
 
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
