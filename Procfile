@@ -1,1 +1,0 @@
-railway: python main.py
