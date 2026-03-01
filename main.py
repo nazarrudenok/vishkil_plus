@@ -67,7 +67,7 @@ def start(message):
             cursor.execute("SELECT * FROM users WHERE username = %s", (message.from_user.username))
             user_data = cursor.fetchone()
 
-            bot.send_message(message.chat.id, f'Вітаю, {user_data[2] if user_data[2] != "-" else user_data[6]}', reply_markup=markup)
+            bot.send_message(message.chat.id, f"Вітаю, {user_data[2] if user_data[2] != '-' else user_data[6]}", reply_markup=markup)
 
 @bot.message_handler(commands=['send'])
 def admin(message):
