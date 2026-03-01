@@ -1,1 +1,1 @@
-run: python3 main.py
+railway up
