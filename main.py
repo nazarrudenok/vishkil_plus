@@ -55,7 +55,7 @@ def start(message):
             cursor.execute("INSERT INTO users (username, chat_id) VALUES (%s, %s)", (message.from_user.username, message.from_user.id))
             connection.commit()
 
-            msg = bot.send_message(message.chat.id, 'Вітаю, друже! Ти вже пройшов відбір на «Вишкіл Військового Лідерства 2026». Далі тобі необхідно створити особистий кабінет на порталі Вишкіл+\nНапиши своє прізвище та ім\'я')
+            msg = bot.send_message(message.chat.id, 'Вітаю! Ти вже пройшов відбір на «Вишкіл Військового Лідерства 2026». Далі тобі необхідно створити особистий кабінет на порталі Вишкіл+\nНапиши своє прізвище та ім\'я')
             bot.register_next_step_handler(msg, get_pib)
         else:
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
