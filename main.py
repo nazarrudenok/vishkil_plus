@@ -1,6 +1,8 @@
 import telebot
 import requests
 from telebot import types
+from openpyxl import Workbook
+import os
 from config import *
 
 bot = telebot.TeleBot(bot)
@@ -75,6 +77,29 @@ def admin(message):
     if message.from_user.id == 8220945297:
         msg = bot.send_message(8220945297, 'Текст:')
         bot.register_next_step_handler(msg, send_adm)
+
+@bot.message_handler(commands=['get_users'])
+def get_users(message):
+    cursor.execute("SELECT * FROM users")
+    data = cursor.fetchall()
+
+    wb = Workbook()
+    ws = wb.active
+
+    if data:
+        headers = data[0].keys()
+        ws.append(list(headers))
+
+        for row in data:
+            ws.append(list(row.values()))
+
+    file_name = "users.xlsx"
+    wb.save(file_name)
+
+    with open(file_name, "rb") as f:
+        bot.send_document(message.chat.id, f)
+
+    os.remove(file_name)
 
 @bot.message_handler(content_types=['contact'])
 def get_num(message):
