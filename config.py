@@ -3,11 +3,11 @@ import pymysql
 bot = '8355675288:AAGjeACTPhZfOGfYjTJeF9M2xFWOs4jkhZY'
 
 connection = pymysql.connect(
-    host="crossover.proxy.rlwy.net",
+    host="switchyard.proxy.rlwy.net",
     user="root",
-    password="ZcwcQvUHPyezOfkDLPINEdEEjiugrukw",
-    database="railway",   # назва БД
-    port=14501,
+    password="WqleWxZfmJxQQQJxCmqlfbsKElUUYztG",
+    database="railway",
+    port=47846,
     charset="utf8mb4",
     cursorclass=pymysql.cursors.DictCursor
 )
