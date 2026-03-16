@@ -78,35 +78,39 @@ def admin(message):
 
 @bot.message_handler(content_types=['contact'])
 def get_num(message):
-    cursor.execute("UPDATE users SET num = %s WHERE username = %s", (message.contact.phone_number, message.from_user.username))
-    connection.commit()
+    if message.text:
+        msg = bot.send_message(message.chat.id, 'Натисни на кнопку внизу, щоб поділитись контактом')
+        bot.register_next_step_handler(msg, get_num)
+    else:
+        cursor.execute("UPDATE users SET num = %s WHERE username = %s", (message.contact.phone_number, message.from_user.username))
+        connection.commit()
 
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-    b1 = types.KeyboardButton(text='📄 Ваші документи')
-    b2 = types.KeyboardButton(text='❓ Часті запитання')
-    b3 = types.KeyboardButton(text='👕 Необхідні речі')
-    b4 = types.KeyboardButton(text='💬 Зв\'язок з черговим')
-    markup.add(b1, b2, b3, b4)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        b1 = types.KeyboardButton(text='📄 Ваші документи')
+        b2 = types.KeyboardButton(text='❓ Часті запитання')
+        b3 = types.KeyboardButton(text='👕 Необхідні речі')
+        b4 = types.KeyboardButton(text='💬 Зв\'язок з черговим')
+        markup.add(b1, b2, b3, b4)
 
-    msg = bot.send_message(message.chat.id, f"""
-<b>Особистий кабінет створено</b>
-——————
-Функціонал Вишкіл+ для тебе відкритий.
+        msg = bot.send_message(message.chat.id, f"""
+    <b>Особистий кабінет створено</b>
+    ——————
+    Функціонал Вишкіл+ для тебе відкритий.
 
-«📄 Ваші документи»
-Тут ти можеш переглянути свої дані (в подальшому тобі буде присвоєно взвод та відділення, слідкуй за повідомленнями).
+    «📄 Ваші документи»
+    Тут ти можеш переглянути свої дані (в подальшому тобі буде присвоєно взвод та відділення, слідкуй за повідомленнями).
 
-«❓ Часті запитання»
-Для твоєї зручності ти можеш отримати відповіді на найпоширеніші запитання та не чекати довгої відповіді.
+    «❓ Часті запитання»
+    Для твоєї зручності ти можеш отримати відповіді на найпоширеніші запитання та не чекати довгої відповіді.
 
-«💬 Звʼязок з оперативним черговим»
-Якщо ж відповіді на своє запитання ти не знайшов, ти можеш звʼязатися з Оперативним черговим, який вже знає відповіді на будь-які запитання.
+    «💬 Звʼязок з оперативним черговим»
+    Якщо ж відповіді на своє запитання ти не знайшов, ти можеш звʼязатися з Оперативним черговим, який вже знає відповіді на будь-які запитання.
 
-Також сюди буде надходити важлива інформація до самого вишколу, тому слідкуй!
-                           
-<a href='https://t.me/+KKxOOylk0cs0YmNi'>Також приєднюйся до групи з учасниками для комунікації</a>
-""", reply_markup=markup, parse_mode='HTML')
-    bot.clear_step_handler(msg)
+    Також сюди буде надходити важлива інформація до самого вишколу, тому слідкуй!
+                            
+    <a href='https://t.me/+KKxOOylk0cs0YmNi'>Також приєднюйся до групи з учасниками для комунікації</a>
+    """, reply_markup=markup, parse_mode='HTML')
+        bot.clear_step_handler(msg)
 
 @bot.message_handler(content_types=['text'])
 def text(message):
