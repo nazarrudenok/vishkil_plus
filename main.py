@@ -38,13 +38,32 @@ def get_poz(message):
     bot.register_next_step_handler(msg, get_num)
 
 def send_adm(message):
-    text = message.text
-
     cursor.execute("SELECT chat_id FROM users")
     ids = cursor.fetchall()
 
     for i in ids:
-        bot.send_message(i['chat_id'], text)
+        try:
+            # Текст
+            if message.content_type == 'text':
+                bot.send_message(i['chat_id'], message.text)
+
+            # Документ (файл)
+            elif message.content_type == 'document':
+                file_id = message.document.file_id
+                bot.send_document(i['chat_id'], file_id, caption=message.caption)
+
+            # Фото
+            elif message.content_type == 'photo':
+                file_id = message.photo[-1].file_id
+                bot.send_photo(i['chat_id'], file_id, caption=message.caption)
+
+            # Відео (як бонус)
+            elif message.content_type == 'video':
+                file_id = message.video.file_id
+                bot.send_video(i['chat_id'], file_id, caption=message.caption)
+
+        except Exception as e:
+            print(f"Помилка при відправці {i['chat_id']}: {e}")
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -75,7 +94,7 @@ def start(message):
 @bot.message_handler(commands=['send'])
 def admin(message):
     if message.from_user.id == 8220945297:
-        msg = bot.send_message(8220945297, 'Текст:')
+        msg = bot.send_message(message.chat.id, 'Надішли текст або файл:')
         bot.register_next_step_handler(msg, send_adm)
 
 @bot.message_handler(commands=['get_users'])
